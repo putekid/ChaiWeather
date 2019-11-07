@@ -1,11 +1,12 @@
 package com.example.chaiweather.util;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.example.chaiweather.db.City;
 import com.example.chaiweather.db.County;
 import com.example.chaiweather.db.Province;
+import com.example.chaiweather.gson.WeatherResponse;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -72,5 +73,29 @@ public class Utility {
             }
         }
         return false;
+    }
+
+
+    public static WeatherResponse handleWeatherResponse(String response,City city){
+        WeatherResponse weatherResponse = new Gson().fromJson(response,WeatherResponse.class);
+        //不缓存到数据库了，缓存到SharedPreferences
+        /*weatherResponse.setOfCity(city);
+        //TODO 保存到数据库，缓存
+        new Thread(() -> {
+            weatherResponse.save();
+            weatherResponse.getData().forEach( d -> {
+                d.setWeatherResponse(weatherResponse);
+                d.save();
+                d.getHours().forEach(h -> {
+                    h.setWeatherData(d);
+                    h.save();
+                });
+                d.getIndex().forEach(i -> {
+                    i.setWeatherData(d);
+                    i.save();
+                });
+            });
+        }).start();*/
+        return weatherResponse;
     }
 }
