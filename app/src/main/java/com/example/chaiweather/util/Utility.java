@@ -76,7 +76,7 @@ public class Utility {
     }
 
 
-    public static WeatherResponse handleWeatherResponse(String response,City city){
+    public static WeatherResponse handleWeatherResponse(String response){
         WeatherResponse weatherResponse = new Gson().fromJson(response,WeatherResponse.class);
         //不缓存到数据库了，缓存到SharedPreferences
         /*weatherResponse.setOfCity(city);

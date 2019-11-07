@@ -11,6 +11,10 @@ public class WeatherData {
     private String day;//7日（今天）
     private String date;//日期
     private String week;//星期几
+    private String wea;
+
+
+
     @SerializedName("wea_img")
     private String weaImg;//天气对应图标(xue, lei, shachen, wu, bingbao, yun, yu, yin, qing)
     private int air;//空气质量
@@ -149,4 +153,11 @@ public class WeatherData {
         this.index = index;
     }
 
+    public String getWea() {
+        return wea;
+    }
+
+    public void setWea(String wea) {
+        this.wea = wea;
+    }
 }

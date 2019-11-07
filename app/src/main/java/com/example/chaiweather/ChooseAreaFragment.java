@@ -1,6 +1,7 @@
 package com.example.chaiweather;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.print.PrinterId;
 import android.support.annotation.NonNull;
@@ -115,6 +116,11 @@ public class ChooseAreaFragment extends Fragment {
                     queryCouties();
                 }else if(currentLevel == LEVEL_COUNTY){
                     //TODO 点击县应该显示天气页面
+                    String countyName = countyList.get(position).getCountyName();
+                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
+                    intent.putExtra("city",countyName);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
