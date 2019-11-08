@@ -115,11 +115,9 @@ public class ChooseAreaFragment extends Fragment {
                     selectedCity = cityList.get(position);
                     queryCouties();
                 }else if(currentLevel == LEVEL_COUNTY){
-                    //TODO 点击县应该显示天气页面
+                    //TODO 点击县应该显示天气页面，改为跳转到城市管理页面
                     String countyName = countyList.get(position).getCountyName();
-                    Intent intent = new Intent(getActivity(),WeatherActivity.class);
-                    intent.putExtra("city",countyName);
-                    startActivity(intent);
+                    CityManagerActivity.actionStart(getActivity(),countyName);
                     getActivity().finish();
                 }
             }

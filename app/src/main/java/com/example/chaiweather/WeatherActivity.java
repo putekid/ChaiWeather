@@ -1,12 +1,14 @@
 package com.example.chaiweather;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +41,7 @@ import com.example.chaiweather.util.HttpUtil;
 import com.example.chaiweather.util.LogUtil;
 import com.example.chaiweather.util.TimeUtil;
 import com.example.chaiweather.util.Utility;
+import com.example.chaiweather.util.WeatherImageUtil;
 import com.example.chaiweather.util.WeatherParam;
 
 import org.w3c.dom.Text;
@@ -82,6 +85,7 @@ public class WeatherActivity extends BaseActivity {
     private TextView temRangeText;
     private ImageView weatherImg;
     private SwipeRefreshLayout swipeRefreshLayout;//天气信息下拉刷新组件
+    private NavigationView navigationView;//滑动菜单里面的内容
 
     private LocationClient mLocationClient;
     private String locationCity;//当前定位城市
@@ -128,6 +132,7 @@ public class WeatherActivity extends BaseActivity {
         temRangeText = findViewById(R.id.tem_range_text);
         weatherImg = findViewById(R.id.weather_img);
         swipeRefreshLayout = findViewById(R.id.swiper_refresh);
+        navigationView = findViewById(R.id.nav_view);
 
 
 
@@ -177,6 +182,23 @@ public class WeatherActivity extends BaseActivity {
             drawerLayout.openDrawer(GravityCompat.START);
         });
 
+        //滑动菜单里面的菜单设置点击事件
+        navigationView.setNavigationItemSelectedListener((menuItem -> {
+            switch (menuItem.getItemId()){
+                case R.id.city_manager :
+                    //TODO 打开城市管理页面
+                    CityManagerActivity.actionStart(WeatherActivity.this,null);
+                    break;
+                case R.id.about_me :
+                    //TODO 打开关于我页面
+                    break;
+                    default:
+            }
+
+            drawerLayout.closeDrawers();
+            return true;
+        }));
+
     }
 
     /**
@@ -217,35 +239,8 @@ public class WeatherActivity extends BaseActivity {
         String degree = todayWeather.getTem();
         String weatherInfo = todayWeather.getWea();
         String temRange = todayWeather.getTem2() + "-" + todayWeather.getTem1();
-
-        if(todayWeather.getWea().endsWith("雨"))
-            weatherImg.setImageResource(R.drawable.yu);
-        else if(todayWeather.getWea().endsWith("雪"))
-            weatherImg.setImageResource(R.drawable.xue);
-        else if(todayWeather.getWea().endsWith("云"))
-            weatherImg.setImageResource(R.drawable.yun);
-
-        //设置天气描述图片
-        switch (todayWeather.getWea()){
-            case "晴":
-                weatherImg.setImageResource(R.drawable.qing);
-                break;
-            case "雷阵雨":
-                weatherImg.setImageResource(R.drawable.zhenyu);
-                break;
-            case "扬沙":
-                weatherImg.setImageResource(R.drawable.shachen);
-                break;
-            case "雾":
-                weatherImg.setImageResource(R.drawable.wu);
-                break;
-            case "阴":
-                weatherImg.setImageResource(R.drawable.yin);
-                break;
-            case "雨夹雪":
-                weatherImg.setImageResource(R.drawable.yujiaxue);
-                break;
-        }
+        //根据天气情况设置对应的图片
+        weatherImg.setImageResource(WeatherImageUtil.getImageIdByWeather(todayWeather.getWea()));
 
         //设置内容
         titleCity.setText(cityName);
