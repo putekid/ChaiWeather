@@ -1,6 +1,7 @@
 package com.example.chaiweather;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -488,5 +489,13 @@ public class WeatherActivity extends BaseActivity {
         if(this.isFinishing()){
             mLocationClient.stop();
         }
+    }
+
+
+    public static void actionStart(Context context,String city){
+        Intent intent = new Intent(context,WeatherActivity.class);
+        if(Objects.nonNull(city))
+            intent.putExtra("city",city);
+        context.startActivity(intent);
     }
 }

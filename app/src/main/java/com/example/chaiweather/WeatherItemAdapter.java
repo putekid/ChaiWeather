@@ -42,6 +42,11 @@ public class WeatherItemAdapter extends RecyclerView.Adapter<WeatherItemAdapter.
         viewHolder.cityTemText.setText(weatherItem.getCityTem());
         int selectImageId = WeatherImageUtil.getImageIdByWeather(weatherItem.getCityWeather());
         Glide.with(mContext).load(selectImageId).into(viewHolder.cityWeatherImage);
+
+        viewHolder.cardView.setOnClickListener(v -> {
+            //打开天气页面
+            WeatherActivity.actionStart(mContext,weatherItem.getCityName());
+        });
     }
 
     @Override
@@ -61,7 +66,7 @@ public class WeatherItemAdapter extends RecyclerView.Adapter<WeatherItemAdapter.
             cardView = (CardView)itemView;
             cityWeatherImage = itemView.findViewById(R.id.city_weather_img);
             cityNameText = itemView.findViewById(R.id.city_name);
-            cityWeatherImage = itemView.findViewById(R.id.city_weather);
+            cityWeatherText = itemView.findViewById(R.id.city_weather);
             cityTemText = itemView.findViewById(R.id.city_tem);
         }
     }
