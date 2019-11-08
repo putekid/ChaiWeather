@@ -25,7 +25,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CityManagerActivity"></activity>
+        <service
+            android:name=".AutoUpdateService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".CityManagerActivity" />
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
@@ -38,12 +43,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
     </application>
 
 </manifest>

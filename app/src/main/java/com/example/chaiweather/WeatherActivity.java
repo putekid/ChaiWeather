@@ -302,6 +302,10 @@ public class WeatherActivity extends BaseActivity {
         }
         weatherLayout.setVisibility(View.VISIBLE);//显示天气信息
         loadWeatherProgressBar.setVisibility(View.GONE);
+
+        //开启自动更新服务
+        Intent intent = new Intent(this,AutoUpdateService.class);
+        startService(intent);
     }
 
     /**
@@ -437,6 +441,9 @@ public class WeatherActivity extends BaseActivity {
                     district = district.substring(0,district.lastIndexOf("区"));
                 }
                 locationCity = district;
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("current_city",district);
+                editor.apply();
             }
 
 
