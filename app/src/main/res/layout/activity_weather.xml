@@ -4,6 +4,18 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+    <!--必应每日一图-->
+    <ImageView
+        android:id="@+id/bing_pic_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <ProgressBar
+        android:id="@+id/load_weather_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <ScrollView
         android:id="@+id/weather_layout"
         android:layout_width="match_parent"
@@ -14,7 +26,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
 
             <include layout="@layout/title" />
             <include layout="@layout/now" />

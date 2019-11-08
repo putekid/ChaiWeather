@@ -1,6 +1,5 @@
 package com.example.chaiweather;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.chaiweather.gson.WeatherResponse;
 import com.example.chaiweather.util.Utility;
 

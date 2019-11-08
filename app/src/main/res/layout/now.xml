@@ -1,23 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp">
 
-    <TextView
-        android:id="@+id/degree_text"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:textColor="#fff"
-        android:textSize="60sp"/>
+        android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/weather_info_text"
+        <ImageView
+            android:id="@+id/weather_img"
+            android:layout_width="100sp"
+            android:layout_height="100sp"
+            android:layout_gravity="center_vertical|end" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:textColor="#fff"
-        android:textSize="20sp"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/degree_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textColor="#fff"
+            android:textSize="60sp"/>
+
+        <TextView
+            android:id="@+id/weather_info_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textColor="#fff"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tem_range_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textColor="#fff"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+
 </LinearLayout>

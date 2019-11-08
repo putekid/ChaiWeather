@@ -52,21 +52,29 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2">
-
-            <TextView
-                android:id="@+id/air_desc_text"
-                android:layout_width="wrap_content"
+            <!--需要嵌套一个线性布局-->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="#fff"
-                android:textSize="20sp"/>
+                android:layout_centerInParent="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="建议"
-                android:textColor="#fff"/>
+                <TextView
+                    android:id="@+id/air_desc_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textColor="#fff"
+                    android:textSize="16sp"/>
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="建议"
+                    android:textColor="#fff"/>-->
+            </LinearLayout>
+
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
