@@ -9,11 +9,16 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -56,6 +61,9 @@ import okhttp3.Response;
 
 public class WeatherActivity extends BaseActivity {
     private static final String TAG = "WeatherActivity";
+
+    private DrawerLayout drawerLayout;//滑动菜单
+    private Button navButton;//点击按钮显示滑动菜单
     private ProgressBar loadWeatherProgressBar;
     private ScrollView weatherLayout;
     private TextView titleCity;
@@ -73,6 +81,7 @@ public class WeatherActivity extends BaseActivity {
     private ImageView bingPicImg;
     private TextView temRangeText;
     private ImageView weatherImg;
+    private SwipeRefreshLayout swipeRefreshLayout;//天气信息下拉刷新组件
 
     private LocationClient mLocationClient;
     private String locationCity;//当前定位城市
@@ -96,10 +105,11 @@ public class WeatherActivity extends BaseActivity {
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        requestPermissionsToUseLocation();
 
 
         //初始化各控件
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navButton = findViewById(R.id.nav_button);
         weatherLayout = findViewById(R.id.weather_layout);
         titleCity = findViewById(R.id.title_city);
         titleUpdateTime = findViewById(R.id.title_update_time);
@@ -117,6 +127,9 @@ public class WeatherActivity extends BaseActivity {
         bingPicImg = findViewById(R.id.bing_pic_img);
         temRangeText = findViewById(R.id.tem_range_text);
         weatherImg = findViewById(R.id.weather_img);
+        swipeRefreshLayout = findViewById(R.id.swiper_refresh);
+
+
 
         //获取缓存对象
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -130,6 +143,12 @@ public class WeatherActivity extends BaseActivity {
         if(Objects.nonNull(intentCity)){
             //如果不是null，说明是跳转过来的，设置为跳转传递的城市
             locationCity = intentCity;
+            //跳转过来之后就不再重新获取定位，直接获取天气并显示
+            updateWeatherInfo();
+        }else {
+            //如果是空的，说明不是跳转过来的，那么去申请权限并获取天气
+            requestPermissionsToUseLocation();
+
         }
         if(Objects.isNull(locationCity)) locationCity = "北京";
 
@@ -142,6 +161,21 @@ public class WeatherActivity extends BaseActivity {
         }else {
             loadingBingPic();
         }
+
+        //下拉刷新事件
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            try {
+                requestWeather(locationCity);
+            } catch (UnsupportedEncodingException e) {
+                Toast.makeText(this,"刷新失败",Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        });
+
+        //点击navButton显示滑动菜单
+        navButton.setOnClickListener((v) -> {
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
 
     }
 
@@ -293,6 +327,7 @@ public class WeatherActivity extends BaseActivity {
                 //java.lang.RuntimeException: Can't toast on a thread that has not called Looper.prepare()
                 runOnUiThread(() -> {
                     Toast.makeText(MyApplication.getContext(),"获取天气信息失败",Toast.LENGTH_LONG).show();
+                    swipeRefreshLayout.setRefreshing(false);
                 });
             }
 
@@ -311,6 +346,7 @@ public class WeatherActivity extends BaseActivity {
                     editor.putString(locationCity,responseText);
                     editor.apply();
                     showWeatherInfo(weatherResponse);
+                    swipeRefreshLayout.setRefreshing(false);//关闭刷新显示
                 });
 
             }
