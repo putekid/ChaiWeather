@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">你的天气</string>
+    <string name="me_desc">本人是一位Java后端开发者，业余时间研究一下安卓开发，希望将来能够开发一个优秀的APP。本软件是本人看郭霖老师编写的《第一行代码Android》第二版，跟着老师学习制作。在郭霖老师的基础上增加了滑动菜单、城市管理功能，天气api接口使用了https://www.tianqiapi.com/接口，感谢各位大神的付出。本人能力有限，软件做的水平非常低，如果您有建议请通过公众号联系我，本软件我会维护一段时间。谢谢！</string>
 </resources>
