@@ -192,6 +192,8 @@ public class WeatherActivity extends BaseActivity {
                     break;
                 case R.id.about_me :
                     //TODO 打开关于我页面
+                    Intent intent = new Intent(WeatherActivity.this,AboutMeActivity.class);
+                    startActivity(intent);
                     break;
                     default:
             }
